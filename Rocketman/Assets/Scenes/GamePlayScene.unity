@@ -488,7 +488,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 12
+  orthographic size: 8.25
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -513,7 +513,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.28, y: -0.709, z: -10}
+  m_LocalPosition: {x: -0.2577, y: -0.4504, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -767,10 +767,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 2085844612}
   platformPrefab: {fileID: 2117042002715747772, guid: b24f593e7c0ed1b48b8aaad335ef6507, type: 3}
-  minVerticalOffset: -7
-  maxVerticalOffset: 7
-  minHorizontalOffset: 15
-  maxHorizontalOffset: 22
+  minVerticalOffset: -4
+  maxVerticalOffset: 4
+  minHorizontalOffset: 10
+  maxHorizontalOffset: 15
   deathPlatform: {fileID: 2114767638777926102, guid: 5057a11c03616a9459c9de807c30c51c, type: 3}
 --- !u!4 &654266402
 Transform:
@@ -1043,7 +1043,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1925109627}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 12
+    OrthographicSize: 8.25
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -1069,7 +1069,7 @@ Transform:
   m_GameObject: {fileID: 1341919031}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.28, y: -0.709, z: -10}
+  m_LocalPosition: {x: -0.2577, y: -0.4504, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1101,7 +1101,7 @@ Transform:
   m_GameObject: {fileID: 1590730050}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.35, z: 0}
+  m_LocalPosition: {x: 0, y: -3.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1386,7 +1386,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 76331f8ecd0835e47a7dbaf8180276a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1406,8 +1406,8 @@ Transform:
   m_GameObject: {fileID: 1925109625}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.28, y: -0.709, z: 0}
-  m_LocalScale: {x: 0.5844, y: 0.8153, z: 1}
+  m_LocalPosition: {x: -0.2577, y: -0.4504, z: 0}
+  m_LocalScale: {x: 0.07605442, y: 0.06822662, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 635577163}
@@ -1447,18 +1447,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.090174675, y: -1.5335724}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 10.7, y: 11.33}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.7052326, y: 6.1780715}
   m_EdgeRadius: 0
 --- !u!50 &1925109629
 Rigidbody2D:
@@ -1500,19 +1500,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HighScore: 0
-  jumpForce: 6
-  jetpackForce: 6
+  jumpForce: 5
+  jetpackForce: 5
   groundCheck: {fileID: 1590730051}
-  checkRadius: 0.22
+  checkRadius: 0.13
   speedLimit: 6
-  checkIsCloseToPlatform: 0.51
+  checkIsCloseToPlatform: 0.39
   startPos: {fileID: 2043311168}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   fuel: 0
   maxFuel: 100
-  fuelConsumptionRate: 20
+  fuelConsumptionRate: 25
   isGrounded: 0
   isCloseToPlatform: 0
   rotationSpeed: 100
@@ -1520,7 +1520,7 @@ MonoBehaviour:
   rotationResetSpeed: 50
   isDead: 0
   deadPanel: {fileID: 658261449}
-  slideSpeed: 2
+  slideSpeed: 3.5
   highScoreText: {fileID: 2037963979}
   fuelBar: {fileID: 361744297}
 --- !u!1 &2025908664
@@ -1803,7 +1803,7 @@ GameObject:
   m_Layer: 0
   m_Name: StartPos
   m_TagString: Untagged
-  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1868,11 +1868,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3375569967623652172, guid: b24f593e7c0ed1b48b8aaad335ef6507, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -33.7519
+      value: -33.811
       objectReference: {fileID: 0}
     - target: {fileID: 3375569967623652172, guid: b24f593e7c0ed1b48b8aaad335ef6507, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.91
+      value: -3.934
       objectReference: {fileID: 0}
     - target: {fileID: 3375569967623652172, guid: b24f593e7c0ed1b48b8aaad335ef6507, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1916,12 +1916,12 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 2043311168}
   - {fileID: 2085844613}
   - {fileID: 1925109627}
   - {fileID: 1341919033}
   - {fileID: 902168648}
   - {fileID: 615362238}
-  - {fileID: 2043311168}
   - {fileID: 654266402}
   - {fileID: 592724190}
   - {fileID: 681811396}

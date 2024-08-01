@@ -5,44 +5,51 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class PlayerMovement : MonoBehaviour
+public class Player: MonoBehaviour
 {
     public int HighScore;
+
+    [Header("Jetpack Attributes")]
     public float jumpForce = 10f;
     public float jetpackForce = 5f;
-    public Transform groundCheck;
     public float checkRadius = 0.2f;
     public float speedLimit = 5f;
-
-    public float checkIsCloseToPlatform;
-    public Transform startPos;
-
-    public LayerMask groundLayer;
     public float fuel;
     public float maxFuel = 100f;
     public float fuelConsumptionRate = 10f;
 
-    private Rigidbody2D rb;
+    [Header("Checks")]
+    public LayerMask groundLayer;
+    public Transform groundCheck;
+    public Transform startPos;
     public bool isGrounded;
-    private bool usingJetpack;
+    public float checkIsCloseToPlatform;
     public bool isCloseToPlatform;
-
-    public float rotationSpeed = 100f; 
-    public float maxRotationAngle = 15f;
-    public float rotationResetSpeed = 50f;
-
     public bool isDead;
-
-    public GameObject deadPanel;
-
+    private bool usingJetpack;
     private Vector3 targetPosition;
     public float slideSpeed = 2f;
 
-    [SerializeField] private TextMeshProUGUI highScoreText;
-    private bool hasTriggeredPlatformEvent;
     private GameObject currentPlatform;
+    private bool hasTriggeredPlatformEvent;
 
+    [Header("---------")]
+    private Rigidbody2D rb;
+    public float rotationSpeed = 100f;
+    public float maxRotationAngle = 15f;
+    public float rotationResetSpeed = 50f;
+
+    [Header("UI")]
+    public GameObject deadPanel;
+    [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private Image fuelBar;
+
+    [Header("AnimationSprites")]
+    [SerializeField] private SpriteRenderer playerSprite;
+    [SerializeField] private Sprite midAirSprite;
+    [SerializeField] private Sprite landedSprite;
+
+
     void Start()
     {
         HighScore = 0;
@@ -65,8 +72,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded && Input.GetKeyDown(KeyCode.W))
         {
-            Destroy(currentPlatform); 
-            Debug.Log("jumped");
+            Destroy(currentPlatform);
             rb.velocity = Vector2.up * jumpForce;
             hasTriggeredPlatformEvent = false;
         }
@@ -87,11 +93,12 @@ public class PlayerMovement : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, targetPosition, slideSpeed * Time.deltaTime);
             fuel = maxFuel;
         }
+       
     }
 
     void FixedUpdate()
     {
-        
+
         if (usingJetpack)
         {
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
@@ -112,7 +119,8 @@ public class PlayerMovement : MonoBehaviour
         float rotation = 0f;
         if (!isCloseToPlatform)
         {
-            
+
+            //playerSprite.sprite = midAirSprite;
             if (Input.GetKey(KeyCode.A))
             {
                 rotation = -rotationSpeed * Time.deltaTime;
@@ -138,15 +146,17 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+
+            //playerSprite.sprite = landedSprite;
             float currentRotation = transform.rotation.eulerAngles.z;
             if (currentRotation > 180f)
             {
                 currentRotation -= 360f;
             }
             rotation = Mathf.MoveTowards(currentRotation, 0, rotationResetSpeed * Time.deltaTime) - currentRotation;
-            RotatePlayer(rotation);      
+            RotatePlayer(rotation);
         }
-      
+
     }
 
     void ApplyJetpackForce(Vector2 direction)
@@ -167,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        
+
         if (collision.relativeVelocity.magnitude > speedLimit)
         {
             KillPlayer();
@@ -208,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Respawn()
     {
-        
+
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         isDead = false;
@@ -221,6 +231,6 @@ public class PlayerMovement : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(groundCheck.position, checkIsCloseToPlatform);
-        
+
     }
 }
