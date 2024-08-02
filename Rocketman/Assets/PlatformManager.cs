@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,15 @@ public class PlatformManager : MonoBehaviour
 {
     public static PlatformManager instance;
     public GameObject parent;
-    public GameObject platformPrefab; 
+    public GameObject platformPrefab;
+    public float maxVerticalLimit;
+    public float minVerticalLimit;
     public float minVerticalOffset = 2f;
     public float maxVerticalOffset = 5f; 
     public float minHorizontalOffset = 1f; 
     public float maxHorizontalOffset = 3f;
     public GameObject deathPlatform;
+    public CinemachineVirtualCamera virtualCamera;
 
     private void Start()
     {
@@ -45,16 +49,36 @@ public class PlatformManager : MonoBehaviour
         {
             randomVerticalOffset = -randomVerticalOffset;
         }
+        
 
         Vector3 spawnPosition = currentPlatform.transform.position + new Vector3(randomHorizontalOffset, randomVerticalOffset, 0);
+
+        if (spawnPosition.y > maxVerticalLimit)
+        {
+            spawnPosition.y = maxVerticalLimit;
+        }
+        else if (spawnPosition.y < minVerticalLimit)
+        {
+            spawnPosition.y = minVerticalLimit;
+        }
+        Debug.Log(spawnPosition.y);
         GameObject spawnedplatform = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
         spawnedplatform.transform.SetParent(parent.transform);
 
-        if (deathPlatform != null)
+        if (Player.instance.isGrounded)
         {
-            float deathPlatformOffsetY = -12.0f;
-            deathPlatform.transform.position = spawnedplatform.transform.position + new Vector3(0, deathPlatformOffsetY, 0);
+            GameObject midpointTarget = new GameObject("MidpointTarget");
+            midpointTarget.transform.SetParent(parent.transform);
+
+            Vector3 midpoint = (spawnedplatform.transform.position + currentPlatform.transform.position) / 2 + new Vector3(0, 2, 0);
+            midpointTarget.transform.position = midpoint;
+            virtualCamera.Follow = midpointTarget.transform;
+            
         }
+
+        float deathPlatformOffsetY = -9.0f;
+        deathPlatform.transform.position = spawnedplatform.transform.position + new Vector3(0, deathPlatformOffsetY, 0);
+       
         
     }
 }

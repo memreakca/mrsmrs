@@ -7,6 +7,8 @@ using TMPro;
 
 public class Player: MonoBehaviour
 {
+    public static Player instance;
+
     public int HighScore;
 
     [Header("Jetpack Attributes")]
@@ -29,6 +31,9 @@ public class Player: MonoBehaviour
     private bool usingJetpack;
     private Vector3 targetPosition;
     public float slideSpeed = 2f;
+    public float jumpInterval;
+    public bool canJump;
+    private float jumpTimer;
 
     private GameObject currentPlatform;
     private bool hasTriggeredPlatformEvent;
@@ -43,13 +48,19 @@ public class Player: MonoBehaviour
     public GameObject deadPanel;
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private Image fuelBar;
+    
 
     [Header("AnimationSprites")]
     [SerializeField] private SpriteRenderer playerSprite;
     [SerializeField] private Sprite midAirSprite;
     [SerializeField] private Sprite landedSprite;
+    [SerializeField] private GameObject LeftRocketEffect;
+    [SerializeField] private GameObject RightRocketEffect;
 
-
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
         HighScore = 0;
@@ -60,6 +71,7 @@ public class Player: MonoBehaviour
 
     void Update()
     {
+        
         if (isDead)
         {
             return;
@@ -70,11 +82,14 @@ public class Player: MonoBehaviour
         isCloseToPlatform = Physics2D.OverlapCircle(groundCheck.position, checkIsCloseToPlatform, groundLayer);
 
 
-        if (isGrounded && Input.GetKeyDown(KeyCode.W))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space) && canJump)
         {
-            Destroy(currentPlatform);
+            
+            JumpedFromPlatform();
             rb.velocity = Vector2.up * jumpForce;
             hasTriggeredPlatformEvent = false;
+            jumpTimer = jumpInterval;
+            canJump = false;
         }
 
         if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) && fuel > 0 && !isGrounded)
@@ -89,13 +104,28 @@ public class Player: MonoBehaviour
 
         if (isGrounded)
         {
+            jumpTimer -= Time.deltaTime;
+
+            if (jumpTimer < 0)
+            {
+                canJump = true;
+            }
             SetTargetPositionToPlatformCenter();
             transform.position = Vector3.Lerp(transform.position, targetPosition, slideSpeed * Time.deltaTime);
             fuel = maxFuel;
         }
        
     }
-
+    public void JumpedFromPlatform()
+    {
+        Invoke("DestroyPlatform", 2);
+        Rigidbody2D pltfrmrb = currentPlatform.GetComponent<Rigidbody2D>();
+        pltfrmrb.velocity = Vector2.down * jumpForce;
+    }
+    public void DestroyPlatform()
+    {
+        Destroy(currentPlatform);
+    }
     void FixedUpdate()
     {
 
@@ -103,24 +133,33 @@ public class Player: MonoBehaviour
         {
             if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
             {
+                LeftRocketEffect.SetActive(true);
+                RightRocketEffect.SetActive(true);
                 ApplyJetpackForce(Vector2.up);
             }
             else if (Input.GetKey(KeyCode.A))
             {
+                LeftRocketEffect.SetActive(true);
                 ApplyJetpackForce(new Vector2(1, 1).normalized);
             }
             else if (Input.GetKey(KeyCode.D))
             {
+                RightRocketEffect.SetActive(true);
                 ApplyJetpackForce(new Vector2(-1, 1).normalized);
             }
 
             fuel -= fuelConsumptionRate * Time.deltaTime;
         }
+        else
+        {
+            LeftRocketEffect.SetActive(false);
+            RightRocketEffect.SetActive(false);
+        }
         float rotation = 0f;
         if (!isCloseToPlatform)
         {
 
-            //playerSprite.sprite = midAirSprite;
+            playerSprite.sprite = midAirSprite;
             if (Input.GetKey(KeyCode.A))
             {
                 rotation = -rotationSpeed * Time.deltaTime;
@@ -147,7 +186,7 @@ public class Player: MonoBehaviour
         else
         {
 
-            //playerSprite.sprite = landedSprite;
+            playerSprite.sprite = landedSprite;
             float currentRotation = transform.rotation.eulerAngles.z;
             if (currentRotation > 180f)
             {
