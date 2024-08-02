@@ -16,6 +16,7 @@ public class PlatformManager : MonoBehaviour
     public float maxHorizontalOffset = 3f;
     public GameObject deathPlatform;
     public CinemachineVirtualCamera virtualCamera;
+    public GameObject midpointTarget;
 
     private void Start()
     {
@@ -67,9 +68,7 @@ public class PlatformManager : MonoBehaviour
 
         if (Player.instance.isGrounded)
         {
-            GameObject midpointTarget = new GameObject("MidpointTarget");
-            midpointTarget.transform.SetParent(parent.transform);
-
+            
             Vector3 midpoint = (spawnedplatform.transform.position + currentPlatform.transform.position) / 2 + new Vector3(0, 2, 0);
             midpointTarget.transform.position = midpoint;
             virtualCamera.Follow = midpointTarget.transform;
