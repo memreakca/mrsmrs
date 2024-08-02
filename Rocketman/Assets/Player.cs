@@ -76,7 +76,7 @@ public class Player: MonoBehaviour
         {
             return;
         }
-        highScoreText.text = $"Score = {HighScore}";
+        highScoreText.text = $"Score  {HighScore}";
         fuelBar.fillAmount = fuel / 100;
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
         isCloseToPlatform = Physics2D.OverlapCircle(groundCheck.position, checkIsCloseToPlatform, groundLayer);

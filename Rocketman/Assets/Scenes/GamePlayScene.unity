@@ -6374,7 +6374,7 @@ MonoBehaviour:
   speedLimit: 6
   fuel: 0
   maxFuel: 100
-  fuelConsumptionRate: 25
+  fuelConsumptionRate: 30
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
