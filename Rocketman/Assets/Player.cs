@@ -267,6 +267,7 @@ public class Player: MonoBehaviour
             if (distanceToPlatformCenter <= closeDistanceThreshold)
             {
                 SpawnLandingPrefab();
+
                 HighScore++;
             }
         }
