@@ -87,7 +87,6 @@ public class PlatformManager : MonoBehaviour
         float randomVerticalOffset = Random.Range(minNormalVerticalOffset, maxNormalVerticalOffset);
         float randomHorizontalOffset = Random.Range(minNormalHorizontalOffset, maxNormalHorizontalOffset);
 
-
         Vector3 spawnPosition = currentPlatform.transform.position + new Vector3(randomHorizontalOffset, randomVerticalOffset, 0);
         spawnPosition = resetSpawnPosY(spawnPosition);
 
@@ -96,14 +95,10 @@ public class PlatformManager : MonoBehaviour
 
         if (Player.instance.isGrounded)
         {
-
             Vector3 midpoint = (spawnedplatform.transform.position + currentPlatform.transform.position) / 2 + new Vector3(0, 2, 0);
+            StartCoroutine(LerpCamera(midpoint, normalCameraFarSightSize));
             midpointTarget.transform.position = midpoint;
             virtualCamera.Follow = midpointTarget.transform;
-            virtualCamera.m_Lens.OrthographicSize = normalCameraFarSightSize;
-
-
-
         }
 
         float deathPlatformOffsetY = -9.0f;
@@ -121,8 +116,6 @@ public class PlatformManager : MonoBehaviour
         float randomFuelVerticalOffset = Random.Range(fuelPosminVerticalFuelOffset, fuelPosmaxVerticalFuelOffset);
         float randomFuelHorizontalOffset = Random.Range(fuelPosminHorizontalFuelOffset, fuelPosmaxHorizontalFuelOffset);
 
-        Debug.Log(randomFuelHorizontalOffset);
-
         Vector3 fuelSpawnPosition = currentPlatform.transform.position + new Vector3(randomFuelHorizontalOffset, randomFuelVerticalOffset, 0);
 
         GameObject spawnedFuel = Instantiate(fuelPrefab, fuelSpawnPosition, Quaternion.identity);
@@ -134,14 +127,34 @@ public class PlatformManager : MonoBehaviour
         if (Player.instance.isGrounded)
         {
             Vector3 midpoint = (spawnedplatform.transform.position + currentPlatform.transform.position) / 2 + new Vector3(0, 2, 0);
+            StartCoroutine(LerpCamera(midpoint, fuelCameraFarSightSize));
             midpointTarget.transform.position = midpoint;
             virtualCamera.Follow = midpointTarget.transform;
-            virtualCamera.m_Lens.OrthographicSize = fuelCameraFarSightSize;
         }
 
         float deathPlatformOffsetY = -9.0f;
         deathPlatform.transform.position = spawnedplatform.transform.position + new Vector3(0, deathPlatformOffsetY, 0);
     }
+
+    private IEnumerator LerpCamera(Vector3 targetPosition, float targetSize)
+    {
+        Vector3 startPosition = virtualCamera.transform.position;
+        float startSize = virtualCamera.m_Lens.OrthographicSize;
+        float elapsedTime = 0f;
+        float lerpDuration = 1f; 
+
+        while (elapsedTime < lerpDuration)
+        {
+            virtualCamera.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / lerpDuration);
+            virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / lerpDuration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        virtualCamera.transform.position = targetPosition;
+        virtualCamera.m_Lens.OrthographicSize = targetSize;
+    }
+
 
     public Vector3 resetSpawnPosY(Vector3 spawnPosition)
     {

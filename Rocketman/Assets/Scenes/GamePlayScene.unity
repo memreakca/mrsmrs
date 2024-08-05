@@ -5599,7 +5599,7 @@ MonoBehaviour:
   parent: {fileID: 2085844612}
   platformPrefab: {fileID: 2117042002715747772, guid: b24f593e7c0ed1b48b8aaad335ef6507, type: 3}
   fuelPrefab: {fileID: 5123686844011123713, guid: 94d5442e1b6b8a742b3c91d8c7861be9, type: 3}
-  maxVerticalLimit: 12
+  maxVerticalLimit: 9
   minVerticalLimit: -9
   minNormalVerticalOffset: -4
   maxNormalVerticalOffset: 4
