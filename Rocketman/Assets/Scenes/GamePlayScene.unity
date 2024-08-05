@@ -5343,7 +5343,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.99, z: -10}
+  m_LocalPosition: {x: 0, y: 0.741, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5598,15 +5598,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parent: {fileID: 2085844612}
   platformPrefab: {fileID: 2117042002715747772, guid: b24f593e7c0ed1b48b8aaad335ef6507, type: 3}
-  maxVerticalLimit: 3
-  minVerticalLimit: -6
-  minVerticalOffset: -5
-  maxVerticalOffset: 5
-  minHorizontalOffset: 6
-  maxHorizontalOffset: 10
+  fuelPrefab: {fileID: 5123686844011123713, guid: 94d5442e1b6b8a742b3c91d8c7861be9, type: 3}
+  maxVerticalLimit: 12
+  minVerticalLimit: -9
+  minNormalVerticalOffset: -4
+  maxNormalVerticalOffset: 4
+  minNormalHorizontalOffset: 6
+  maxNormalHorizontalOffset: 12
+  minFuelVerticalOffset: -8
+  maxFuelVerticalOffset: 8
+  minFuelHorizontalOffset: 18
+  maxFuelHorizontalOffset: 25
+  fuelPosminVerticalFuelOffset: 2
+  fuelPosmaxVerticalFuelOffset: 6
+  fuelPosminHorizontalFuelOffset: 8
+  fuelPosmaxHorizontalFuelOffset: 10
+  fuelCameraFarSightSize: 8
+  normalCameraFarSightSize: 5
   deathPlatform: {fileID: 2114767638777926102, guid: 5057a11c03616a9459c9de807c30c51c, type: 3}
   virtualCamera: {fileID: 1341919032}
   midpointTarget: {fileID: 1555416518}
+  platformCount: 0
 --- !u!4 &654266402
 Transform:
   m_ObjectHideFlags: 0
@@ -5815,6 +5827,50 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &879873153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 879873154}
+  - component: {fileID: 879873155}
+  m_Layer: 5
+  m_Name: NotificationPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &879873154
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879873153}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 902168648}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 5.7542725, y: 437.61}
+  m_SizeDelta: {x: -1279.1116, y: -1002.6988}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &879873155
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879873153}
+  m_CullTransparentMesh: 1
 --- !u!1 &902168644
 GameObject:
   m_ObjectHideFlags: 0
@@ -5912,6 +5968,7 @@ RectTransform:
   - {fileID: 361744296}
   - {fileID: 2037963981}
   - {fileID: 658261450}
+  - {fileID: 879873154}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5919,11 +5976,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!4 &1327706961 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3375569967623652172, guid: b24f593e7c0ed1b48b8aaad335ef6507, type: 3}
-  m_PrefabInstance: {fileID: 923253437516094117}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1341919031
 GameObject:
   m_ObjectHideFlags: 0
@@ -5989,7 +6041,7 @@ Transform:
   m_GameObject: {fileID: 1341919031}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.99, z: -10}
+  m_LocalPosition: {x: 0, y: 0.741, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6274,7 +6326,7 @@ Transform:
   m_GameObject: {fileID: 1925109625}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.99, z: 0}
+  m_LocalPosition: {x: 0, y: 0.741, z: 0}
   m_LocalScale: {x: 0.097463734, y: 0.087432414, z: 1.2815}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6381,7 +6433,7 @@ MonoBehaviour:
   groundCheck: {fileID: 1590730051}
   startPos: {fileID: 2043311168}
   isGrounded: 0
-  checkIsCloseToPlatform: 0.39
+  checkIsCloseToPlatform: 0.35
   isCloseToPlatform: 0
   isDead: 0
   slideSpeed: 3.5
@@ -6393,6 +6445,8 @@ MonoBehaviour:
   deadPanel: {fileID: 658261449}
   highScoreText: {fileID: 2037963979}
   fuelBar: {fileID: 361744297}
+  NotificationParent: {fileID: 879873154}
+  perfectLandingPrefab: {fileID: 2052599638350393829, guid: 3624bf1171004f040b34c29180214d0d, type: 3}
   playerSprite: {fileID: 1925109626}
   midAirSprite: {fileID: 21300000, guid: 838b9e4614a215741bd180db7a9162f1, type: 3}
   landedSprite: {fileID: 21300000, guid: 84a5c13f1c2653944b9e9b4d6907b637, type: 3}
@@ -6680,7 +6734,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 586.54926, y: 400.67575}
+  m_AnchoredPosition: {x: 644, y: 437.61}
   m_SizeDelta: {x: 414.9015, y: 62.7483}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2043311167
@@ -6743,7 +6797,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1327706961}
+  - {fileID: 2452316771573651945}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &923253437516094117
@@ -11633,6 +11687,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 635577163}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 44.314}
+--- !u!4 &2452316771573651945 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3375569967623652172, guid: b24f593e7c0ed1b48b8aaad335ef6507, type: 3}
+  m_PrefabInstance: {fileID: 923253437516094117}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

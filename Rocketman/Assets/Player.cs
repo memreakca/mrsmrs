@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Unity.VisualScripting;
 
 public class Player: MonoBehaviour
 {
@@ -48,7 +49,9 @@ public class Player: MonoBehaviour
     public GameObject deadPanel;
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private Image fuelBar;
-    
+    [SerializeField] Transform NotificationParent;
+    public GameObject perfectLandingPrefab;
+
 
     [Header("AnimationSprites")]
     [SerializeField] private SpriteRenderer playerSprite;
@@ -63,7 +66,7 @@ public class Player: MonoBehaviour
     }
     void Start()
     {
-        HighScore = 0;
+        HighScore = -2;
         currentPlatform = null;
         fuel = maxFuel;
         rb = GetComponent<Rigidbody2D>();
@@ -110,9 +113,10 @@ public class Player: MonoBehaviour
             {
                 canJump = true;
             }
-            SetTargetPositionToPlatformCenter();
-            transform.position = Vector3.Lerp(transform.position, targetPosition, slideSpeed * Time.deltaTime);
+            //SetTargetPositionToPlatformCenter();
+            //transform.position = Vector3.Lerp(transform.position, targetPosition, slideSpeed * Time.deltaTime);
             fuel = maxFuel;
+            
         }
        
     }
@@ -214,21 +218,31 @@ public class Player: MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, newRotation);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Fuel")
+        {
+            fuel = maxFuel;
+            Destroy(collision.gameObject);
+            HighScore++;
+        }
+    }
     void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.relativeVelocity.magnitude > speedLimit)
         {
             KillPlayer();
         }
         else if (collision.gameObject.tag == "Platform")
         {
-            if (!hasTriggeredPlatformEvent && !isDead)
+            if (!hasTriggeredPlatformEvent && !isDead && isGrounded)
             {
                 hasTriggeredPlatformEvent = true;
+                CheckPlayerPositionToPlatformCenter(transform);
+                rb.velocity = Vector2.zero;
+                HighScore++;
                 currentPlatform = collision.gameObject;
                 PlatformEvents.PlayerLanded(collision.gameObject);
-                HighScore++;
             }
 
         }
@@ -237,14 +251,24 @@ public class Player: MonoBehaviour
             KillPlayer();
         }
     }
-    void SetTargetPositionToPlatformCenter()
+    void CheckPlayerPositionToPlatformCenter(Transform playerPos)
     {
         Collider2D platformCollider = Physics2D.OverlapCircle(groundCheck.position, checkIsCloseToPlatform, groundLayer);
         if (platformCollider != null)
         {
             Bounds platformBounds = platformCollider.bounds;
             Vector3 platformCenter = platformBounds.center;
-            targetPosition = new Vector3(platformCenter.x, transform.position.y, transform.position.z);
+            targetPosition = new Vector3(platformCenter.x, platformBounds.max.y, transform.position.z);
+
+            Bounds playerBounds = GetComponent<BoxCollider2D>().bounds;
+            float distanceToPlatformCenter = Vector3.Distance(playerBounds.min, platformCenter);
+
+            float closeDistanceThreshold = 0.47f;
+            if (distanceToPlatformCenter <= closeDistanceThreshold)
+            {
+                SpawnLandingPrefab();
+                HighScore++;
+            }
         }
     }
     public void KillPlayer()
@@ -263,6 +287,39 @@ public class Player: MonoBehaviour
         isDead = false;
     }
 
+    public void SpawnLandingPrefab()
+    {
+        Vector3 spawnPosition;
+        spawnPosition = transform.position;
+        
+        GameObject spawnedPLanding = Instantiate(perfectLandingPrefab);
+        spawnedPLanding.transform.localPosition =new Vector3(spawnPosition.x,spawnPosition.y+1f,spawnPosition.z);
+
+        float randomRotation = UnityEngine.Random.Range(-40f, 40f);
+        spawnedPLanding.transform.localRotation = Quaternion.Euler(0f, 0f, randomRotation);
+
+        StartCoroutine(MoveUp(spawnedPLanding));
+    }
+
+    private IEnumerator MoveUp(GameObject spawnedPLanding)
+    {
+        float moveUpSpeed = 1.6f;
+        float moveUpDuration = 1.3f;
+
+        float elapsedTime = 0f;
+        Vector3 startPosition = spawnedPLanding.transform.position;
+
+        while (elapsedTime < moveUpDuration)
+        {
+            float newY = Mathf.Lerp(startPosition.y, startPosition.y + moveUpSpeed * moveUpDuration, elapsedTime / moveUpDuration);
+            spawnedPLanding.transform.position = new Vector3(startPosition.x, newY, startPosition.z);
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        Destroy(spawnedPLanding);
+    }
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

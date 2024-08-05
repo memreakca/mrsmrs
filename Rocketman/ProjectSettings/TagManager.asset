@@ -7,6 +7,7 @@ TagManager:
   - Death
   - Platform
   - BackgroundTrigger
+  - Fuel
   layers:
   - Default
   - TransparentFX

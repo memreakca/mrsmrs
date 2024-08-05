@@ -15,6 +15,7 @@ public class BackGroundScroller : MonoBehaviour
     private void Start()
     {
         backgroundWidth = backgroundPrefabs[0].GetComponent<SpriteRenderer>().bounds.size.x;
+
         for (int i = 0; i < backgroundPrefabs.Length; i++)
         {
             GameObject newBackground = Instantiate(
@@ -28,7 +29,6 @@ public class BackGroundScroller : MonoBehaviour
 
     private void Update()
     {
-        // Check if player has moved past the middle of the current background
         if (player.position.x > activeBackgrounds.Peek().transform.position.x + backgroundWidth)
         {
             ShiftBackground();
