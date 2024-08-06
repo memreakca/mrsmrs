@@ -5860,7 +5860,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.7542725, y: 437.61}
+  m_AnchoredPosition: {x: 5.7543945, y: 437.61}
   m_SizeDelta: {x: -1279.1116, y: -1002.6988}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &879873155
@@ -6244,6 +6244,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838044937}
   m_CullTransparentMesh: 1
+--- !u!1 &1892250844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1892250845}
+  m_Layer: 0
+  m_Name: ScorePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1892250845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892250844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.1, y: 4.04, z: -0.036781393}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1925109625
 GameObject:
   m_ObjectHideFlags: 0
@@ -6447,6 +6478,9 @@ MonoBehaviour:
   fuelBar: {fileID: 361744297}
   NotificationParent: {fileID: 879873154}
   perfectLandingPrefab: {fileID: 2052599638350393829, guid: 3624bf1171004f040b34c29180214d0d, type: 3}
+  plusOnePrefab: {fileID: 2052599638350393829, guid: a1d5ece7658fcb74fa64f86d6faebca8, type: 3}
+  scorePos: {fileID: 2037963981}
+  isLandedPerfect: 0
   playerSprite: {fileID: 1925109626}
   midAirSprite: {fileID: 21300000, guid: 838b9e4614a215741bd180db7a9162f1, type: 3}
   landedSprite: {fileID: 21300000, guid: 84a5c13f1c2653944b9e9b4d6907b637, type: 3}
@@ -11707,3 +11741,4 @@ SceneRoots:
   - {fileID: 654266402}
   - {fileID: 592724190}
   - {fileID: 681811396}
+  - {fileID: 1892250845}

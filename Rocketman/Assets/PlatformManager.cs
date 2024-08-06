@@ -99,8 +99,9 @@ public class PlatformManager : MonoBehaviour
             StartCoroutine(LerpCamera(midpoint, normalCameraFarSightSize));
             midpointTarget.transform.position = midpoint;
             virtualCamera.Follow = midpointTarget.transform;
-        }
 
+        }
+        
         float deathPlatformOffsetY = -9.0f;
         deathPlatform.transform.position = spawnedplatform.transform.position + new Vector3(0, deathPlatformOffsetY, 0);
     }
@@ -153,6 +154,10 @@ public class PlatformManager : MonoBehaviour
 
         virtualCamera.transform.position = targetPosition;
         virtualCamera.m_Lens.OrthographicSize = targetSize;
+        if (Player.instance.isLandedPerfect)
+        {
+            Player.instance.SpawnScorePlus();
+        }
     }
 
 

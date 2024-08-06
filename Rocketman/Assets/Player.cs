@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Unity.VisualScripting;
+using System;
+using DG.Tweening;
 
 public class Player: MonoBehaviour
 {
@@ -50,7 +52,11 @@ public class Player: MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private Image fuelBar;
     [SerializeField] Transform NotificationParent;
-    public GameObject perfectLandingPrefab;
+    [SerializeField] private GameObject perfectLandingPrefab;
+    [SerializeField] private GameObject plusOnePrefab;
+    [SerializeField] private RectTransform scorePos;
+    public bool isLandedPerfect;
+
 
 
     [Header("AnimationSprites")]
@@ -87,7 +93,7 @@ public class Player: MonoBehaviour
 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space) && canJump)
         {
-            
+            isLandedPerfect = false;
             JumpedFromPlatform();
             rb.velocity = Vector2.up * jumpForce;
             hasTriggeredPlatformEvent = false;
@@ -263,14 +269,20 @@ public class Player: MonoBehaviour
             Bounds playerBounds = GetComponent<BoxCollider2D>().bounds;
             float distanceToPlatformCenter = Vector3.Distance(playerBounds.min, platformCenter);
 
-            float closeDistanceThreshold = 0.47f;
+            float closeDistanceThreshold = 0.44f;
             if (distanceToPlatformCenter <= closeDistanceThreshold)
             {
-                SpawnLandingPrefab();
-                HighScore++;
+                PerfectLanding();
             }
         }
     }
+
+    public void PerfectLanding()
+    {
+        SpawnLandingPrefab();
+        isLandedPerfect = true;
+    }
+
     public void KillPlayer()
     {
         isDead = true;
@@ -286,7 +298,27 @@ public class Player: MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         isDead = false;
     }
+    public void SpawnScorePlus()
+    {
+        GameObject plusOne = Instantiate(plusOnePrefab);
+        Vector3 spawnPosition = transform.position;
+        plusOne.transform.localPosition = new Vector3(spawnPosition.x, spawnPosition.y + 1f, spawnPosition.z);
 
+        Vector3 targetPosition = ConvertCanvasToWorldPosition(scorePos);
+
+        plusOne.transform.DOMove(targetPosition, 1f).SetEase(Ease.OutCubic).OnComplete(() =>
+        {
+
+            HighScore++;
+            Destroy(plusOne);
+        });
+    }
+    private Vector3 ConvertCanvasToWorldPosition(RectTransform canvasRectTransform)
+    {
+        Vector3 worldPoint;
+        RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRectTransform, canvasRectTransform.position, Camera.main, out worldPoint);
+        return worldPoint;
+    }
     public void SpawnLandingPrefab()
     {
         Vector3 spawnPosition;
