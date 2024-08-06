@@ -65,7 +65,7 @@ public class PlatformManager : MonoBehaviour
             return;
         }
 
-        Player.instance.maxFuel ++;
+        Player.instance.maxFuel += 0.2f;
         fuelCameraFarSightSize += 0.01f;
         normalCameraFarSightSize += 0.01f;
         UpgradeDifficulty();
@@ -171,11 +171,11 @@ public class PlatformManager : MonoBehaviour
 
     public void UpgradeDifficulty()
     {
-        minNormalHorizontalOffset += 0.011f;
-        maxNormalHorizontalOffset += 0.011f;
-        minFuelHorizontalOffset += 0.011f;
-        maxFuelHorizontalOffset += 0.011f;
-        fuelPosminHorizontalFuelOffset += 0.011f;
-        fuelPosmaxHorizontalFuelOffset += 0.011f;
+        minNormalHorizontalOffset += 0.025f;
+        maxNormalHorizontalOffset += 0.025f;
+        minFuelHorizontalOffset += 0.025f;
+        maxFuelHorizontalOffset += 0.025f;
+        fuelPosminHorizontalFuelOffset += 0.025f;
+        fuelPosmaxHorizontalFuelOffset += 0.025f;
     }
 }
