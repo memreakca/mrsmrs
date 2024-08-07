@@ -85,7 +85,7 @@ public class Player: MonoBehaviour
         {
             return;
         }
-        highScoreText.text = $"Score  {HighScore}";
+        highScoreText.text = $"{HighScore}";
         fuelBar.fillAmount = fuel / maxFuel;
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
         isCloseToPlatform = Physics2D.OverlapCircle(groundCheck.position, checkIsCloseToPlatform, groundLayer);
@@ -305,10 +305,9 @@ public class Player: MonoBehaviour
         plusOne.transform.localPosition = new Vector3(spawnPosition.x, spawnPosition.y + 1f, spawnPosition.z);
 
         Vector3 targetPosition = ConvertCanvasToWorldPosition(scorePos);
-
-        plusOne.transform.DOMove(targetPosition, 1f).SetEase(Ease.OutCubic).OnComplete(() =>
+        
+        plusOne.transform.DOMove(targetPosition, 0.8f).SetEase(Ease.OutCubic).OnComplete(() =>
         {
-
             HighScore++;
             Destroy(plusOne);
         });

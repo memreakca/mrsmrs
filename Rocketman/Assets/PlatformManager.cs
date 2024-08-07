@@ -142,18 +142,20 @@ public class PlatformManager : MonoBehaviour
         Vector3 startPosition = virtualCamera.transform.position;
         float startSize = virtualCamera.m_Lens.OrthographicSize;
         float elapsedTime = 0f;
-        float lerpDuration = 1f; 
+        float lerpDuration = 0.6f; 
 
         while (elapsedTime < lerpDuration)
         {
             virtualCamera.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / lerpDuration);
             virtualCamera.m_Lens.OrthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / lerpDuration);
             elapsedTime += Time.deltaTime;
+           
             yield return null;
         }
 
         virtualCamera.transform.position = targetPosition;
         virtualCamera.m_Lens.OrthographicSize = targetSize;
+
         if (Player.instance.isLandedPerfect)
         {
             Player.instance.SpawnScorePlus();
