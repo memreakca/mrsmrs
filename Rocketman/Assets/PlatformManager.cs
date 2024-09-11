@@ -79,7 +79,6 @@ public class PlatformManager : MonoBehaviour
             SpawnFuelPlatform(currentPlatform);
         }
 
-
     }
 
     public void SpawnNormalPlatform(GameObject currentPlatform)
